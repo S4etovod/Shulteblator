@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        background-color: black;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .wrapper {
+        min-height: 100%;
+
+        /* Equal to height of footer */
+        /* But also accounting for potential margin-bottom of last child */
+        margin-bottom: -50px;
+      }
+      header,
+      footer {
+        text-align: center;
+        width: 100%;
+        height: 50px;
+        color: white;
+        background-color: orange;
+        font-size: 35px;
+        line-height: 50px;
+      }
+
+      main {
+        box-sizing: border-box;
+        width: 500px;
+        height: 500px;
+        border: 5px solid orange;
+        border-radius: 10px;
+        margin: 30px auto;
+        background-color: white;
+        padding: 3px;
+      }
+      .footer,
+      .push {
+        height: 50px;
+      }
+      footer {
+        margin-bottom: 0px;
+      }
+
+      #parent {
+        /* text-align: center; */
+      }
+      #field {
+        /* display: inline-block; */
+        margin: auto;
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+
+      #field td {
+        display: inline-block;
+        box-sizing: border-box;
+        line-height: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+        padding: 20px;
+        border: 1px solid black;
+        cursor: pointer;
+      }
+      .active {
+        background: rgb(64, 148, 212);
+      }
+      #buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      #buttons button {
+        display: inline-block;
+        background-color: white;
+        color: black;
+        border: 3px solid orange;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>Shulteblator</header>
+      <main>
+        <div id="parent">
+          <table id="field"></table>
+        </div>
+      </main>
+      <div id="buttons">
+        <button id="less">Уменьшить таблицу</button>
+
+        <button id="restart">Сыграть снова</button>
+        <button id="more">Увеличить таблицу</button>
+      </div>
+      <div class="push"></div>
+    </div>
+    <footer>
+      <p>github.com/S4etovod</p>
+    </footer>
+  </body>
+  <script>
+    let field = document.querySelector("#field");
+    let less = document.querySelector("#less");
+    let restart = document.querySelector("#restart");
+    let more = document.querySelector("#more");
+    let size = 2;
+
+    start(size);
+
+    restart.addEventListener("dblclick", function () {
+      field.textContent = "";
+      start(size);
+    });
+
+    less.addEventListener("dblclick", function () {
+      if (size > 2) {
+        field.textContent = "";
+        size--;
+        start(size);
+      }
+    });
+
+    more.addEventListener("dblclick", function () {
+      if (size < 8) {
+        field.textContent = "";
+        size++;
+        start(size);
+      }
+    });
+
+    function range(count) {
+      let a = [];
+      for (let i = 1; i <= count; i++) {
+        a.push(i);
+      }
+      return a;
+      console.log(a);
+    }
+
+    function shuffle(ar) {
+      for (let j = 0; j < ar.length; j++) {
+        let index = Math.floor(Math.random() * (ar.length - 1));
+        // console.log(index);
+        let prom = ar[j];
+        ar[j] = ar[index];
+        ar[index] = prom;
+      }
+      return ar;
+    }
+
+    function chunk(arr, n) {
+      let narr = [];
+      let k = 0;
+      let dim = arr.length / n;
+      for (let i = 0; i < dim; i++) {
+        let a = [];
+        for (let j = 0; j < dim; j++) {
+          a.push(arr[k++]);
+        }
+        narr.push(a);
+        // console.log(narr);
+      }
+      // arr = 0;
+
+      return narr;
+      // console.log(arr);
+    }
+
+    function prepare(size) {
+      let arr = [];
+      arr = range(size * size);
+      console.log(arr);
+      arr = shuffle(arr);
+      arr = chunk(arr, size);
+
+      return arr;
+    }
+
+    function build(field, arr) {
+      for (let i = 0; i < arr.length; i++) {
+        let tr = document.createElement("tr");
+        for (let j = 0; j < arr.length; j++) {
+          let td = document.createElement("td");
+          td.textContent = arr[i][j];
+          tr.appendChild(td);
+        }
+        field.appendChild(tr);
+      }
+      return document.querySelectorAll("#field td");
+    }
+
+    function activate(cells) {
+      let counter = 1; // счетчик
+
+      for (let cell of cells) {
+        cell.addEventListener("click", function () {
+          if (this.textContent == counter) {
+            this.classList.add("active");
+            counter++;
+
+            // if (counter == size * size + 1) {
+            //   field.textContent = "";
+            //   start(++size);
+            // }
+          }
+        });
+      }
+    }
+
+    function start(size) {
+      activate(build(field, prepare(size)), size);
+    }
+  </script>
+</html>
