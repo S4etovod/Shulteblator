@@ -121,12 +121,12 @@
 
     start(size);
 
-    restart.addEventListener("dblclick", function () {
+    restart.addEventListener("click", function () {
       field.textContent = "";
       start(size);
     });
 
-    less.addEventListener("dblclick", function () {
+    less.addEventListener("click", function () {
       if (size > 2) {
         field.textContent = "";
         size--;
@@ -134,7 +134,7 @@
       }
     });
 
-    more.addEventListener("dblclick", function () {
+    more.addEventListener("click", function () {
       if (size < 6) {
         field.textContent = "";
         size++;
