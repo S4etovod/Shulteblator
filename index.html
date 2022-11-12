@@ -16,8 +16,6 @@
       .wrapper {
         min-height: 100%;
 
-        /* Equal to height of footer */
-        /* But also accounting for potential margin-bottom of last child */
         margin-bottom: -50px;
       }
       header,
@@ -32,6 +30,10 @@
       }
 
       main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         box-sizing: border-box;
         width: 500px;
         height: 500px;
@@ -39,21 +41,18 @@
         border-radius: 10px;
         margin: 30px auto;
         background-color: white;
-        padding: 3px;
+        padding: 18px;
       }
       .footer,
       .push {
         height: 50px;
       }
       footer {
+        width: 100%;
         margin-bottom: 0px;
       }
 
-      #parent {
-        /* text-align: center; */
-      }
       #field {
-        /* display: inline-block; */
         margin: auto;
         border-collapse: collapse;
         border: 1px solid black;
@@ -62,11 +61,13 @@
       #field td {
         display: inline-block;
         box-sizing: border-box;
-        line-height: 20px;
-        width: 60px;
-        height: 60px;
-        font-size: 25px;
-        padding: 20px;
+        line-height: 70px;
+        text-align: center;
+        width: 75px;
+        height: 75px;
+        font-size: 40px;
+        font-weight: bold;
+
         border: 1px solid black;
         cursor: pointer;
       }
@@ -87,7 +88,7 @@
         color: black;
         border: 3px solid orange;
         border-radius: 5px;
-        font-size: 16px;
+        font-size: 17px;
       }
     </style>
   </head>
@@ -134,7 +135,7 @@
     });
 
     more.addEventListener("dblclick", function () {
-      if (size < 8) {
+      if (size < 6) {
         field.textContent = "";
         size++;
         start(size);
@@ -171,12 +172,9 @@
           a.push(arr[k++]);
         }
         narr.push(a);
-        // console.log(narr);
       }
-      // arr = 0;
 
       return narr;
-      // console.log(arr);
     }
 
     function prepare(size) {
@@ -210,11 +208,6 @@
           if (this.textContent == counter) {
             this.classList.add("active");
             counter++;
-
-            // if (counter == size * size + 1) {
-            //   field.textContent = "";
-            //   start(++size);
-            // }
           }
         });
       }
@@ -225,3 +218,4 @@
     }
   </script>
 </html>
+
